@@ -123,7 +123,13 @@ class Download extends Eloquent implements PresentableInterface {
 		curl_setopt($ch, CURLOPT_FILE, $fp);
 		curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, [$this, 'curlProgressHandler']);
 		curl_setopt($ch, CURLOPT_NOPROGRESS, FALSE);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+		
+		// CURLOPT_FOLLOWLOCATION cannot activate when safe_mode or open_basedir is turned on
+		if (ini_get('safe_mode') == 0 AND ini_get('open_basedir') == '')
+		{
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+		}
+		
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		$result = curl_exec($ch);
 		curl_close($ch);
