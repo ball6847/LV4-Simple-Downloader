@@ -31,6 +31,7 @@ class DownloaderController extends AuthorizedController {
         $dl->status = 1;
         $dl->save();
         
+        putenv('ENVIRONMENT='.getenv('ENVIRONMENT'));
         shell_exec(base_path().'/artisan download:start ' . escapeshellarg($dl->id) . ' > /dev/null 2>&1 &');
         
         return Redirect::route('download.index')->with('success', 'Successfully added new download.');
