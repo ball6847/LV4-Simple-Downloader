@@ -152,9 +152,21 @@ class Download extends Eloquent implements PresentableInterface {
 		return TRUE;
 	}
 	
-	protected function curlProgressHandler($download_size, $downloaded, $upload_size, $uploaded)
+	protected function curlProgressHandler()
 	{
 		static $lastProgress, $lastPush;
+		
+		// CURLOPT_PROGRESSFUNCTION changed in php 5.5 
+		$args = func_get_args();
+		
+		if (is_resource($args[0]))
+		{
+			list(, $download_size, $downloaded) = $args;
+		}
+		else
+		{
+			list($download_size, $downloaded) = $args;
+		}
 		
 		// set status to downloading
 		if ($this->status != 2)
