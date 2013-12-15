@@ -23,6 +23,11 @@ composer.lock
 # Packages
 _ide_helpers.php
 
+# env
 *.komodoproject
 .komodotools
 /logs
+
+# app
+/public/downloads
+!/public/downloads/.gitkeep
