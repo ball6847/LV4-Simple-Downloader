@@ -30,4 +30,4 @@ _ide_helpers.php
 
 # app
 /public/downloads/*
-!/public/downloads/.gitkeep
+!/public/downloads/.htaccess
